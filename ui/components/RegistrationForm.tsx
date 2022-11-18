@@ -1,8 +1,6 @@
 import React from "react";
 
-export default function LoginForm({ onClickSignUp }: {
-  onClickSignUp: React.MouseEventHandler
-}) {
+export default function RegistrationForm() {
   return (
     <form className="
       w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
@@ -10,7 +8,7 @@ export default function LoginForm({ onClickSignUp }: {
     ">
       <div>
         <label
-          htmlFor="login_email_field"
+          htmlFor="registration_email_field"
           className="font-semibold"
         >
           Email
@@ -18,8 +16,8 @@ export default function LoginForm({ onClickSignUp }: {
         <br />
         <input
           type="email"
-          id="login_email_field"
-          name="login_email_field"
+          id="registration_email_field"
+          name="registration_email_field"
           required
           placeholder="john.doe@email.com"
           className="
@@ -32,16 +30,16 @@ export default function LoginForm({ onClickSignUp }: {
       </div>
       <div>
         <label
-          htmlFor="login_password_field"
+          htmlFor="registration_password_field"
           className="font-semibold"
         >
-          Password
+          Password <span className="text-sm font-normal">(min 8 characters)</span>
         </label>
         <br />
         <input
           type="password"
-          id="login_password_field"
-          name="login_password_field"
+          id="registration_password_field"
+          name="registration_password_field"
           minLength={8}
           maxLength={40}
           title="8-40 characters"
@@ -55,25 +53,39 @@ export default function LoginForm({ onClickSignUp }: {
           "
         />
       </div>
-      <div className="flex gap-6 m-auto">
+      <div>
+        <label
+          htmlFor="registration_confirm_password_field"
+          className="font-semibold"
+        >
+          Confirm Password
+        </label>
+        <br />
         <input
-          type="submit"
-          value="Login"
+          type="password"
+          id="registration_confirm_password_field"
+          name="registration_confirm_password_field"
+          minLength={8}
+          maxLength={40}
+          title="8-40 characters"
+          required
+          placeholder="********"
           className="
-            px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-            hover:outline outline-2 outline-white
+            w-full h-10 p-2 bg-transparent rounded-md
+            border-2 border-neutral-200
+            focus-visible:outline-none valid:focus-visible:border-green-300
+            invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
         />
-        <button
-          className="
-            px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-            hover:outline outline-2 outline-white
-          "
-          onClick={onClickSignUp}
-        >
-          Sign Up
-        </button>
       </div>
+      <input
+        type="submit"
+        value="Create Account"
+        className="
+          px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
+          hover:outline outline-2 outline-white
+        "
+      />
     </form>
   );
 }
