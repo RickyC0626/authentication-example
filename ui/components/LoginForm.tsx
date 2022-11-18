@@ -18,11 +18,12 @@ export default function LoginForm() {
           type="email"
           id="email_field"
           required
+          placeholder="john.doe@email.com"
           className="
             w-full h-10 p-2 bg-transparent rounded-md
             border-2 border-neutral-200
             focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300
+            invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
         />
       </div>
@@ -40,11 +41,12 @@ export default function LoginForm() {
           pattern=".{8,}"
           title="8 characters minimum"
           required
+          placeholder="********"
           className="
             w-full h-10 p-2 bg-transparent rounded-md
             border-2 border-neutral-200
             focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300
+            invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
         />
       </div>
