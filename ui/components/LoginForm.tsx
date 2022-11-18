@@ -8,6 +8,10 @@ export default function LoginForm({ onClickSignUp }: {
       w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
       grid grid-cols-1 gap-5 sm:w-80
     ">
+      <h2 className="text-center text-2xl font-semibold sm:text-3xl">
+        Login
+      </h2>
+      <div className="h-[1px] w-5/6 bg-white/25 m-auto"></div>
       <div>
         <label
           htmlFor="login_email_field"
