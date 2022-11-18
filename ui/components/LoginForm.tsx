@@ -6,11 +6,11 @@ export default function LoginForm({ onClickSignUp }: {
   return (
     <form className="
       w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
-      grid grid-cols-1 gap-6 sm:w-80
+      grid grid-cols-1 gap-5 sm:w-80
     ">
       <div>
         <label
-          htmlFor="email_field"
+          htmlFor="login_email_field"
           className="font-semibold"
         >
           Email
@@ -18,7 +18,8 @@ export default function LoginForm({ onClickSignUp }: {
         <br />
         <input
           type="email"
-          id="email_field"
+          id="login_email_field"
+          name="login_email_field"
           required
           placeholder="john.doe@email.com"
           className="
@@ -31,17 +32,19 @@ export default function LoginForm({ onClickSignUp }: {
       </div>
       <div>
         <label
-          htmlFor="password_field"
+          htmlFor="login_password_field"
           className="font-semibold"
         >
-          Password <span className="text-sm font-normal">(min 8 characters)</span>
+          Password
         </label>
         <br />
         <input
           type="password"
-          id="password_field"
-          pattern=".{8,}"
-          title="8 characters minimum"
+          id="login_password_field"
+          name="login_password_field"
+          minLength={8}
+          maxLength={40}
+          title="8-40 characters"
           required
           placeholder="********"
           className="
