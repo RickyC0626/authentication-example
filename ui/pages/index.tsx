@@ -1,7 +1,10 @@
 import React from "react";
 import LoginForm from "../components/LoginForm";
+import RegistrationForm from "../components/RegistrationForm";
 
 export default function Home() {
+  const [isSigningUp, setSigningUp] = React.useState(false); 
+
   return (
     <div>
       <main className="
@@ -12,7 +15,10 @@ export default function Home() {
           <h1 className="text-3xl text-white font-bold text-center sm:text-4xl">
             Company Logo
           </h1>
-          <LoginForm />
+          {isSigningUp ?
+            <RegistrationForm /> :
+            <LoginForm onClickSignUp={() => setSigningUp(true)} />
+          }
         </div>
       </main>
     </div>

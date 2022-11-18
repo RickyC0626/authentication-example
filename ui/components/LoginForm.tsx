@@ -1,6 +1,8 @@
 import React from "react";
 
-export default function LoginForm() {
+export default function LoginForm({ onClickSignUp }: {
+  onClickSignUp: React.MouseEventHandler
+}) {
   return (
     <form className="
       w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
@@ -64,6 +66,7 @@ export default function LoginForm() {
             px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
             hover:outline outline-2 outline-white
           "
+          onClick={onClickSignUp}
         >
           Sign Up
         </button>
