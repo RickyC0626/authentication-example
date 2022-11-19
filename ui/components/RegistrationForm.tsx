@@ -3,8 +3,8 @@ import {
   StyledForm,
   StyledFormDivider,
   StyledFormFieldSection,
-  StyledFormInput,
-  StyledFormInputLabel,
+  StyledFormFieldInput,
+  StyledFormFieldLabel,
   StyledFormSubmitButton,
   StyledFormTitle
 } from "./Form";
@@ -15,8 +15,8 @@ export default function RegistrationForm() {
       <StyledFormTitle>Sign Up</StyledFormTitle>
       <StyledFormDivider />
       <StyledFormFieldSection>
-        <StyledFormInputLabel htmlFor="signup_email_field">Email</StyledFormInputLabel>
-        <StyledFormInput
+        <StyledFormFieldLabel htmlFor="signup_email_field">Email</StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="email"
           id="signup_email_field"
           name="signup_email_field"
@@ -25,10 +25,10 @@ export default function RegistrationForm() {
         />
       </StyledFormFieldSection>
       <StyledFormFieldSection>
-        <StyledFormInputLabel htmlFor="signup_password_field">
+        <StyledFormFieldLabel htmlFor="signup_password_field">
           Password <span className="text-sm font-normal">(minimum 8 characters)</span>
-        </StyledFormInputLabel>
-        <StyledFormInput
+        </StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="password"
           id="signup_password_field"
           name="signup_password_field"
@@ -40,8 +40,8 @@ export default function RegistrationForm() {
         />
       </StyledFormFieldSection>
       <StyledFormFieldSection>
-        <StyledFormInputLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormInputLabel>
-        <StyledFormInput
+        <StyledFormFieldLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="password"
           id="signup_confirm_password_field"
           name="signup_confirm_password_field"

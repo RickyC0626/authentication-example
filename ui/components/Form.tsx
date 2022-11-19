@@ -18,13 +18,13 @@ export const StyledFormFieldSection = tw.div`
   grid gap-1
 `;
 
-export const StyledFormInput = tw.input`
+export const StyledFormFieldInput = tw.input`
   w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
   focus-visible:outline-none valid:focus-visible:border-green-300
   invalid:focus-visible:border-red-300 placeholder:text-white/50
 `;
 
-export const StyledFormInputLabel = tw.label`
+export const StyledFormFieldLabel = tw.label`
   font-semibold
 `;
 

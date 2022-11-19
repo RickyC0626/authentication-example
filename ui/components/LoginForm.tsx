@@ -5,8 +5,8 @@ import {
   StyledFormButtonSection,
   StyledFormDivider,
   StyledFormFieldSection,
-  StyledFormInput,
-  StyledFormInputLabel,
+  StyledFormFieldInput,
+  StyledFormFieldLabel,
   StyledFormSubmitButton,
   StyledFormTitle
 } from "./Form";
@@ -19,8 +19,8 @@ export default function LoginForm({ onClickSignUp }: {
       <StyledFormTitle>Login</StyledFormTitle>
       <StyledFormDivider />
       <StyledFormFieldSection>
-        <StyledFormInputLabel htmlFor="login_email_field">Email</StyledFormInputLabel>
-        <StyledFormInput
+        <StyledFormFieldLabel htmlFor="login_email_field">Email</StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="email"
           id="login_email_field"
           name="login_email_field"
@@ -29,8 +29,8 @@ export default function LoginForm({ onClickSignUp }: {
         />
       </StyledFormFieldSection>
       <StyledFormFieldSection>
-        <StyledFormInputLabel htmlFor="login_password_field">Password</StyledFormInputLabel>
-        <StyledFormInput
+        <StyledFormFieldLabel htmlFor="login_password_field">Password</StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="password"
           id="login_password_field"
           name="login_password_field"
