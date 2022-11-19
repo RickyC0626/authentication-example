@@ -1,91 +1,61 @@
 import React from "react";
+import {
+  StyledForm,
+  StyledFormDivider,
+  StyledFormFieldSection,
+  StyledFormFieldInput,
+  StyledFormFieldLabel,
+  StyledFormSubmitButton,
+  StyledFormTitle
+} from "./Form";
 
 export default function RegistrationForm() {
   return (
-    <form className="
-      w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
-      grid grid-cols-1 gap-5 sm:w-80
-    ">
-      <div>
-        <label
-          htmlFor="registration_email_field"
-          className="font-semibold"
-        >
-          Email
-        </label>
-        <br />
-        <input
+    <StyledForm>
+      <StyledFormTitle>Sign Up</StyledFormTitle>
+      <StyledFormDivider />
+      <StyledFormFieldSection>
+        <StyledFormFieldLabel htmlFor="signup_email_field">Email</StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="email"
-          id="registration_email_field"
-          name="registration_email_field"
-          required
+          id="signup_email_field"
+          name="signup_email_field"
           placeholder="john.doe@email.com"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
+          required
         />
-      </div>
-      <div>
-        <label
-          htmlFor="registration_password_field"
-          className="font-semibold"
-        >
-          Password <span className="text-sm font-normal">(min 8 characters)</span>
-        </label>
-        <br />
-        <input
+      </StyledFormFieldSection>
+      <StyledFormFieldSection>
+        <StyledFormFieldLabel htmlFor="signup_password_field">
+          Password <span className="text-sm font-normal">(minimum 8 characters)</span>
+        </StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="password"
-          id="registration_password_field"
-          name="registration_password_field"
+          id="signup_password_field"
+          name="signup_password_field"
+          placeholder="********"
+          required
           minLength={8}
           maxLength={40}
           title="8-40 characters"
-          required
-          placeholder="********"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
         />
-      </div>
-      <div>
-        <label
-          htmlFor="registration_confirm_password_field"
-          className="font-semibold"
-        >
-          Confirm Password
-        </label>
-        <br />
-        <input
+      </StyledFormFieldSection>
+      <StyledFormFieldSection>
+        <StyledFormFieldLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormFieldLabel>
+        <StyledFormFieldInput
           type="password"
-          id="registration_confirm_password_field"
-          name="registration_confirm_password_field"
+          id="signup_confirm_password_field"
+          name="signup_confirm_password_field"
+          placeholder="********"
+          required
           minLength={8}
           maxLength={40}
           title="8-40 characters"
-          required
-          placeholder="********"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
         />
-      </div>
-      <input
+      </StyledFormFieldSection>
+      <StyledFormSubmitButton
         type="submit"
         value="Create Account"
-        className="
-          px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-          hover:outline outline-2 outline-white
-        "
       />
-    </form>
+    </StyledForm>
   );
 }
