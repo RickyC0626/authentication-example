@@ -1,89 +1,61 @@
 import React from "react";
+import {
+  StyledForm,
+  StyledFormDivider,
+  StyledFormFieldSection,
+  StyledFormInput,
+  StyledFormInputLabel,
+  StyledFormSubmitButton,
+  StyledFormTitle
+} from "./Form";
 
 export default function RegistrationForm() {
   return (
-    <form className="
-      w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
-      grid grid-cols-1 gap-5 sm:w-80
-    ">
-      <h2 className="text-center text-2xl font-semibold sm:text-3xl">
-        Sign Up
-      </h2>
-      <div className="h-[1px] w-5/6 bg-white/25 m-auto"></div>
-      <div className="grid gap-1">
-        <label
-          htmlFor="registration_email_field"
-          className="font-semibold"
-        >
-          Email
-        </label>
-        <input
+    <StyledForm>
+      <StyledFormTitle>Sign Up</StyledFormTitle>
+      <StyledFormDivider />
+      <StyledFormFieldSection>
+        <StyledFormInputLabel htmlFor="signup_email_field">Email</StyledFormInputLabel>
+        <StyledFormInput
           type="email"
-          id="registration_email_field"
-          name="registration_email_field"
-          required
+          id="signup_email_field"
+          name="signup_email_field"
           placeholder="john.doe@email.com"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
+          required
         />
-      </div>
-      <div className="grid gap-1">
-        <label
-          htmlFor="registration_password_field"
-          className="font-semibold"
-        >
-          Password <span className="text-sm font-normal">(min 8 characters)</span>
-        </label>
-        <input
+      </StyledFormFieldSection>
+      <StyledFormFieldSection>
+        <StyledFormInputLabel htmlFor="signup_password_field">
+          Password <span className="text-sm font-normal">(minimum 8 characters)</span>
+        </StyledFormInputLabel>
+        <StyledFormInput
           type="password"
-          id="registration_password_field"
-          name="registration_password_field"
+          id="signup_password_field"
+          name="signup_password_field"
+          placeholder="********"
+          required
           minLength={8}
           maxLength={40}
           title="8-40 characters"
-          required
-          placeholder="********"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
         />
-      </div>
-      <div className="grid gap-1">
-        <label
-          htmlFor="registration_confirm_password_field"
-          className="font-semibold"
-        >
-          Confirm Password
-        </label>
-        <input
+      </StyledFormFieldSection>
+      <StyledFormFieldSection>
+        <StyledFormInputLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormInputLabel>
+        <StyledFormInput
           type="password"
-          id="registration_confirm_password_field"
-          name="registration_confirm_password_field"
+          id="signup_confirm_password_field"
+          name="signup_confirm_password_field"
+          placeholder="********"
+          required
           minLength={8}
           maxLength={40}
           title="8-40 characters"
-          required
-          placeholder="********"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
         />
-      </div>
-      <input
+      </StyledFormFieldSection>
+      <StyledFormSubmitButton
         type="submit"
         value="Create Account"
-        className="
-          px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-          hover:outline outline-2 outline-white
-        "
       />
-    </form>
+    </StyledForm>
   );
 }

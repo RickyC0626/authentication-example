@@ -1,79 +1,53 @@
 import React from "react";
+import {
+  StyledForm,
+  StyledFormButton,
+  StyledFormButtonSection,
+  StyledFormDivider,
+  StyledFormFieldSection,
+  StyledFormInput,
+  StyledFormInputLabel,
+  StyledFormSubmitButton,
+  StyledFormTitle
+} from "./Form";
 
 export default function LoginForm({ onClickSignUp }: {
   onClickSignUp: React.MouseEventHandler
 }) {
   return (
-    <form className="
-      w-72 h-fit p-6 rounded-md bg-white/25 backdrop-blur-sm text-white
-      grid grid-cols-1 gap-5 sm:w-80
-    ">
-      <h2 className="text-center text-2xl font-semibold sm:text-3xl">
-        Login
-      </h2>
-      <div className="h-[1px] w-5/6 bg-white/25 m-auto"></div>
-      <div className="grid gap-1">
-        <label
-          htmlFor="login_email_field"
-          className="font-semibold"
-        >
-          Email
-        </label>
-        <input
+    <StyledForm>
+      <StyledFormTitle>Login</StyledFormTitle>
+      <StyledFormDivider />
+      <StyledFormFieldSection>
+        <StyledFormInputLabel htmlFor="login_email_field">Email</StyledFormInputLabel>
+        <StyledFormInput
           type="email"
           id="login_email_field"
           name="login_email_field"
-          required
           placeholder="john.doe@email.com"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
+          required
         />
-      </div>
-      <div className="grid gap-1">
-        <label
-          htmlFor="login_password_field"
-          className="font-semibold"
-        >
-          Password
-        </label>
-        <input
+      </StyledFormFieldSection>
+      <StyledFormFieldSection>
+        <StyledFormInputLabel htmlFor="login_password_field">Password</StyledFormInputLabel>
+        <StyledFormInput
           type="password"
           id="login_password_field"
           name="login_password_field"
+          placeholder="********"
+          required
           minLength={8}
           maxLength={40}
           title="8-40 characters"
-          required
-          placeholder="********"
-          className="
-            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
-            focus-visible:outline-none valid:focus-visible:border-green-300
-            invalid:focus-visible:border-red-300 placeholder:text-white/50
-          "
         />
-      </div>
-      <div className="flex gap-6 m-auto">
-        <input
+      </StyledFormFieldSection>
+      <StyledFormButtonSection>
+        <StyledFormSubmitButton
           type="submit"
           value="Login"
-          className="
-            px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-            hover:outline outline-2 outline-white
-          "
         />
-        <button
-          className="
-            px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-            hover:outline outline-2 outline-white
-          "
-          onClick={onClickSignUp}
-        >
-          Sign Up
-        </button>
-      </div>
-    </form>
+        <StyledFormButton onClick={onClickSignUp}>Sign Up</StyledFormButton>
+      </StyledFormButtonSection>
+    </StyledForm>
   );
 }
