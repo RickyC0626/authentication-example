@@ -1,6 +1,5 @@
 import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
-import { RiLockPasswordLine } from "react-icons/ri";
 import {
   StyledForm,
   StyledFormButton,
@@ -12,6 +11,7 @@ import {
   StyledFormSubmitButton,
   StyledFormTitle
 } from "./Form";
+import PasswordInputField from "./PasswordInputField";
 
 export default function LoginForm({ onClickSignUp }: {
   onClickSignUp: React.MouseEventHandler
@@ -34,20 +34,8 @@ export default function LoginForm({ onClickSignUp }: {
         </div>
       </StyledFormFieldSection>
       <StyledFormFieldSection>
-        <StyledFormFieldLabel htmlFor="login_password_field">Password</StyledFormFieldLabel>
-        <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
-          <StyledFormFieldInput
-            type="password"
-            id="login_password_field"
-            name="login_password_field"
-            placeholder="********"
-            required
-            minLength={8}
-            maxLength={40}
-            title="8-40 characters"
-          />
-        </div>
+        <StyledFormFieldLabel>Password</StyledFormFieldLabel>
+        <PasswordInputField />
       </StyledFormFieldSection>
       <StyledFormButtonSection>
         <StyledFormSubmitButton

@@ -1,6 +1,5 @@
 import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
-import { RiLockPasswordLine } from "react-icons/ri";
 import {
   StyledForm,
   StyledFormDivider,
@@ -10,6 +9,7 @@ import {
   StyledFormSubmitButton,
   StyledFormTitle
 } from "./Form";
+import PasswordInputField from "./PasswordInputField";
 
 export default function RegistrationForm() {
   return (
@@ -33,35 +33,11 @@ export default function RegistrationForm() {
         <StyledFormFieldLabel htmlFor="signup_password_field">
           Password <span className="text-sm font-normal">(minimum 8 characters)</span>
         </StyledFormFieldLabel>
-        <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
-          <StyledFormFieldInput
-            type="password"
-            id="signup_password_field"
-            name="signup_password_field"
-            placeholder="********"
-            required
-            minLength={8}
-            maxLength={40}
-            title="8-40 characters"
-          />
-        </div>
+        <PasswordInputField />
       </StyledFormFieldSection>
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormFieldLabel>
-        <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
-          <StyledFormFieldInput
-            type="password"
-            id="signup_confirm_password_field"
-            name="signup_confirm_password_field"
-            placeholder="********"
-            required
-            minLength={8}
-            maxLength={40}
-            title="8-40 characters"
-          />
-        </div>
+        <PasswordInputField />
       </StyledFormFieldSection>
       <StyledFormSubmitButton
         type="submit"
