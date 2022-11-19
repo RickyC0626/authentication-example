@@ -12,14 +12,13 @@ export default function LoginForm({ onClickSignUp }: {
         Login
       </h2>
       <div className="h-[1px] w-5/6 bg-white/25 m-auto"></div>
-      <div>
+      <div className="grid gap-1">
         <label
           htmlFor="login_email_field"
           className="font-semibold"
         >
           Email
         </label>
-        <br />
         <input
           type="email"
           id="login_email_field"
@@ -27,21 +26,19 @@ export default function LoginForm({ onClickSignUp }: {
           required
           placeholder="john.doe@email.com"
           className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
+            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
             focus-visible:outline-none valid:focus-visible:border-green-300
             invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
         />
       </div>
-      <div>
+      <div className="grid gap-1">
         <label
           htmlFor="login_password_field"
           className="font-semibold"
         >
           Password
         </label>
-        <br />
         <input
           type="password"
           id="login_password_field"
@@ -52,8 +49,7 @@ export default function LoginForm({ onClickSignUp }: {
           required
           placeholder="********"
           className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
+            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
             focus-visible:outline-none valid:focus-visible:border-green-300
             invalid:focus-visible:border-red-300 placeholder:text-white/50
           "

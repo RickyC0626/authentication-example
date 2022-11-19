@@ -10,14 +10,13 @@ export default function RegistrationForm() {
         Sign Up
       </h2>
       <div className="h-[1px] w-5/6 bg-white/25 m-auto"></div>
-      <div>
+      <div className="grid gap-1">
         <label
           htmlFor="registration_email_field"
           className="font-semibold"
         >
           Email
         </label>
-        <br />
         <input
           type="email"
           id="registration_email_field"
@@ -25,21 +24,19 @@ export default function RegistrationForm() {
           required
           placeholder="john.doe@email.com"
           className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
+            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
             focus-visible:outline-none valid:focus-visible:border-green-300
             invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
         />
       </div>
-      <div>
+      <div className="grid gap-1">
         <label
           htmlFor="registration_password_field"
           className="font-semibold"
         >
           Password <span className="text-sm font-normal">(min 8 characters)</span>
         </label>
-        <br />
         <input
           type="password"
           id="registration_password_field"
@@ -50,21 +47,19 @@ export default function RegistrationForm() {
           required
           placeholder="********"
           className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
+            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
             focus-visible:outline-none valid:focus-visible:border-green-300
             invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
         />
       </div>
-      <div>
+      <div className="grid gap-1">
         <label
           htmlFor="registration_confirm_password_field"
           className="font-semibold"
         >
           Confirm Password
         </label>
-        <br />
         <input
           type="password"
           id="registration_confirm_password_field"
@@ -75,8 +70,7 @@ export default function RegistrationForm() {
           required
           placeholder="********"
           className="
-            w-full h-10 p-2 bg-transparent rounded-md
-            border-2 border-neutral-200
+            w-full h-10 p-2 bg-transparent rounded-md border-2 border-white/50
             focus-visible:outline-none valid:focus-visible:border-green-300
             invalid:focus-visible:border-red-300 placeholder:text-white/50
           "
