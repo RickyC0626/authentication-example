@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { IoMdPerson } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -13,9 +14,7 @@ import {
   StyledFormTitle
 } from "./Form";
 
-export default function LoginForm({ onClickSignUp }: {
-  onClickSignUp: React.MouseEventHandler
-}) {
+export default function LoginForm() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -65,7 +64,9 @@ export default function LoginForm({ onClickSignUp }: {
           type="submit"
           value="Login"
         />
-        <StyledFormButton onClick={onClickSignUp}>Sign Up</StyledFormButton>
+        <Link href="/signup">
+          <StyledFormButton>Sign Up</StyledFormButton>
+        </Link>
       </StyledFormButtonSection>
     </StyledForm>
   );

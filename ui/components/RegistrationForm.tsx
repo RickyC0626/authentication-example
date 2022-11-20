@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import { IoMdPerson } from "react-icons/io";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -17,6 +19,7 @@ import {
   email as emailRegex
 } from "../utils/regex";
 
+
 const error = {
   invalidUsername: "Must be 3-30 characters (A-Z, a-z, 0-9, _)",
   invalidEmail: "Invalid email",
@@ -25,6 +28,7 @@ const error = {
 };
 
 export default function RegistrationForm() {
+  const router = useRouter();
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -34,10 +38,20 @@ export default function RegistrationForm() {
   const [validPassword, setValidPassword] = React.useState(true);
   const [passwordsMatch, setPasswordsMatch] = React.useState(true);
 
+  const sendRequest = () => {
+    axios.post("http://localhost:8000/signup", { username, email, password })
+      .then((res) => {
+        console.log(res);
+        router.push("/");
+      })
+      .catch((err) => console.error(err));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if(!validUsername || !validEmail || !validPassword || !passwordsMatch) return;
+    sendRequest();
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
