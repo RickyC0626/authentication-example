@@ -1,29 +1,23 @@
 import express from "express";
-import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import { createUser, findUserByUsername, getAllUsers, validatePassword } from "../db";
 
 const router = express.Router();
 
-type User = {
-  username: string;
-  email: string;
-  password: string;
-}
-
-const users: User[] = [];
-
 router.get("/users", (req, res) => {
+  const users = getAllUsers();
+
   res.json(users);
 });
 
 router.get("/login", async (req, res) => {
   const { username, password } = req.body;
-  const user = users.find(user => user.username === username);
+  const user = findUserByUsername(username);
 
   if(!user) return res.sendStatus(403);
 
   try {
-    if(await bcrypt.compare(password, user.password)) {
+    if(await validatePassword(password, user.hashedPassword)) {
       res.sendStatus(200);
     }
     else res.sendStatus(403);
@@ -37,11 +31,7 @@ router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    await sendVerificationEmail(email);
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user: User = { username, email, password: hashedPassword };
-
-    users.push(user);
+    await createUser({ username, email, password });
     res.sendStatus(201);
   }
   catch {
