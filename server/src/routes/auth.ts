@@ -1,5 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 const router = express.Router();
 
@@ -36,6 +37,7 @@ router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    await sendVerificationEmail(email);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user: User = { username, email, password: hashedPassword };
 
@@ -46,5 +48,34 @@ router.post("/signup", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+async function sendVerificationEmail(email: string) {
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  const testAccount = await nodemailer.createTestAccount();
+
+  // Create reusable transporter object using the default SMTP transport
+  const transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass, // generated ethereal password
+    },
+  });
+
+  // Send mail with defined transport object
+  const info = await transporter.sendMail({
+    from: "Authentication Server <auth@example.com>", // sender address
+    to: email, // list of receivers
+    subject: "One-Time Email Verification Code", // subject line
+    text: "Your one-time verification code, expires in 10 minutes:", // plain text body
+    html: "<p>Your one-time verification code, expires in 10 minutes:<p>", // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+}
 
 export default router;

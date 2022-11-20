@@ -41,9 +41,11 @@ An example authentication system with registration and login forms
 - [ ] `POST /signup` - Create new account
   - [X] Request body contains `username`, `email` and `password`
   - [X] Hashes password with salt
-  - [ ] Sends email verification with one-time code
-  - [ ] Verifies one-time code before persisting new account
   - [ ] Persists new user account in database
+    - [ ] Field for verified email status
+    - [ ] If email unverified, delete account after 15 minutes
+    - [ ] If email verified, set verified email status to true, don't delete
+  - [ ] Sends email verification with one-time code, set to expire in 10 minutes
   - [X] Respond with status code `201 Created` on success
   - [X] Respond with status code `500 Internal Server Error` on failure
 - [ ] `GET /login` - Login with credentials
@@ -57,6 +59,12 @@ An example authentication system with registration and login forms
   - [X] Respond with status code `200 OK` on success
   - [X] Respond with status code `403 Forbidden` on failure
   - [X] Respond with status code `500 Internal Server Error` on general failure
+- [ ] `GET /verify` - Verify new account
+  - [ ] Request body contains `accountId` and `otp`
+  - [ ] Checks if `otp` has expired (compare current time to expiry timestamp)
+  - [ ] Verifies one-time code, allows sending access token to user after next login
+  - [ ] Allows only 3 failed attempts before voiding the code
+    - [ ] Redirects to login page after voiding
 
 #### Persistence (Database)
 - [ ] Setup MongoDB
