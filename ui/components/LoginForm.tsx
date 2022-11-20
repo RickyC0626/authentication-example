@@ -1,4 +1,5 @@
 import React from "react";
+import { IoMdPerson } from "react-icons/io";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   StyledForm,
@@ -21,14 +22,14 @@ export default function LoginForm({ onClickSignUp }: {
       <StyledFormTitle>Login</StyledFormTitle>
       <StyledFormDivider />
       <StyledFormFieldSection>
-        <StyledFormFieldLabel htmlFor="login_email_field">Email</StyledFormFieldLabel>
+        <StyledFormFieldLabel htmlFor="login_username_field">Username</StyledFormFieldLabel>
         <div className="flex">
-          <MdOutlineEmail className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <IoMdPerson className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
           <StyledFormFieldInput
-            type="email"
-            id="login_email_field"
-            name="login_email_field"
-            placeholder="john.doe@email.com"
+            type="text"
+            id="login_username_field"
+            name="login_username_field"
+            placeholder="JohnDoe22"
             required
           />
         </div>
