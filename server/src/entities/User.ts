@@ -4,4 +4,9 @@ export type User = {
   username: string;
   email: string;
   hashedPassword: string;
+  verified: boolean;
+  otp?: {
+    hashedCode: string;
+    expiryDate: number;
+  }
 };

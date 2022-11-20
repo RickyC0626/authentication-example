@@ -22,7 +22,8 @@ export async function createUser({ username, email, password }: {
     dateJoined: Date.now(),
     username,
     email,
-    hashedPassword: hashed
+    hashedPassword: hashed,
+    verified: false
   };
 
   // Insert user into database
