@@ -65,17 +65,26 @@ async function sendVerificationEmail(email: string) {
     },
   });
 
+  const otp = generateOTP();
+
   // Send mail with defined transport object
   const info = await transporter.sendMail({
     from: "Authentication Server <auth@example.com>", // sender address
     to: email, // list of receivers
     subject: "One-Time Email Verification Code", // subject line
-    text: "Your one-time verification code, expires in 10 minutes:", // plain text body
-    html: "<p>Your one-time verification code, expires in 10 minutes:<p>", // html body
+    text: `Your one-time verification code, expires in 10 minutes:\n${otp}`, // plain text body
+    html: `
+      <p>Your one-time verification code, expires in 10 minutes:<p>
+      <b>${otp}</b>
+    `, // html body
   });
 
   console.log("Message sent: %s", info.messageId);
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+}
+
+function generateOTP(): string {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
 export default router;
