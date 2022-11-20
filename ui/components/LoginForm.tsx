@@ -1,5 +1,7 @@
+import Link from "next/link";
 import React from "react";
-import { MdOutlineEmail } from "react-icons/md";
+import { IoMdPerson } from "react-icons/io";
+import { RiLockPasswordLine } from "react-icons/ri";
 import {
   StyledForm,
   StyledFormButton,
@@ -11,38 +13,60 @@ import {
   StyledFormSubmitButton,
   StyledFormTitle
 } from "./Form";
-import PasswordInputField from "./PasswordInputField";
 
-export default function LoginForm({ onClickSignUp }: {
-  onClickSignUp: React.MouseEventHandler
-}) {
+export default function LoginForm() {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={handleSubmit}>
       <StyledFormTitle>Login</StyledFormTitle>
       <StyledFormDivider />
       <StyledFormFieldSection>
-        <StyledFormFieldLabel htmlFor="login_email_field">Email</StyledFormFieldLabel>
+        <StyledFormFieldLabel htmlFor="login_username_field">Username</StyledFormFieldLabel>
         <div className="flex">
-          <MdOutlineEmail className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <IoMdPerson className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
           <StyledFormFieldInput
-            type="email"
-            id="login_email_field"
-            name="login_email_field"
-            placeholder="john.doe@email.com"
+            type="text"
+            id="login_username_field"
+            name="login_username_field"
+            placeholder="JohnDoe22"
             required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            $isValid={true}
           />
         </div>
       </StyledFormFieldSection>
       <StyledFormFieldSection>
         <StyledFormFieldLabel>Password</StyledFormFieldLabel>
-        <PasswordInputField />
+        <div className="flex">
+          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInput
+            type="password"
+            placeholder="********"
+            required
+            minLength={8}
+            maxLength={40}
+            title="8-40 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            $isValid={true}
+          />
+        </div>
       </StyledFormFieldSection>
       <StyledFormButtonSection>
         <StyledFormSubmitButton
           type="submit"
           value="Login"
         />
-        <StyledFormButton onClick={onClickSignUp}>Sign Up</StyledFormButton>
+        <Link href="/signup">
+          <StyledFormButton>Sign Up</StyledFormButton>
+        </Link>
       </StyledFormButtonSection>
     </StyledForm>
   );

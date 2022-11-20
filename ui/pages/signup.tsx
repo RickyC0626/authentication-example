@@ -1,7 +1,6 @@
-import React from "react";
-import LoginForm from "../components/LoginForm";
+import RegistrationForm from "../components/RegistrationForm";
 
-export default function Home() {
+export default function SignUp() {
   return (
     <div>
       <main className="
@@ -12,7 +11,7 @@ export default function Home() {
           <h1 className="text-3xl text-white font-bold text-center sm:text-4xl">
             Company Logo
           </h1>
-          <LoginForm />
+          <RegistrationForm />
         </div>
       </main>
     </div>
