@@ -10,6 +10,18 @@ router.get("/users", async (req, res) => {
   res.json(users);
 });
 
+/**
+ * GET /api/auth/login
+ *
+ * Request body: username, password
+ *
+ * Success:
+ * - 200 OK: login successful
+ *
+ * Failure:
+ * - 403 Forbidden: user credentials are wrong
+ * - 500 Internal Server Error: all other errors
+ */
 router.get("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await findUserByUsername(username);
