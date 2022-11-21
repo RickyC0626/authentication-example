@@ -42,7 +42,7 @@ An example authentication system with registration and login forms
   - [X] Request body contains `username`, `email` and `password`
   - [X] Hashes password with salt
   - [ ] Persists new user account in database
-    - [ ] Field for verified email status
+    - [X] Field for verified email status
     - [ ] If email unverified, delete account after 15 minutes
     - [ ] If email verified, set verified email status to true, don't delete
   - [ ] Sends email verification with one-time code, set to expire in 10 minutes
@@ -50,7 +50,7 @@ An example authentication system with registration and login forms
   - [X] Respond with status code `500 Internal Server Error` on failure
 - [ ] `GET /login` - Login with credentials
   - [X] Request body contains `username` and `password`
-  - [ ] Retrieves user from database by `username`
+  - [X] Retrieves user from database by `username`
   - [X] Compares password hashes with stored hash
   - [ ] Sends email verification with one-time code
   - [ ] Sends limited use access token to use in browser as response
@@ -67,4 +67,4 @@ An example authentication system with registration and login forms
     - [ ] Redirects to login page after voiding
 
 #### Persistence (Database)
-- [ ] Setup MongoDB
+- [X] Setup MongoDB
