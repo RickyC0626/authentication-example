@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { CgSpinner } from "react-icons/cg";
 import { IoMdPerson } from "react-icons/io";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -37,6 +38,7 @@ export default function RegistrationForm() {
   const [validEmail, setValidEmail] = React.useState(true);
   const [validPassword, setValidPassword] = React.useState(true);
   const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uname = e.target.value;
@@ -65,13 +67,15 @@ export default function RegistrationForm() {
         console.log(res);
         router.push("/");
       })
-      .catch((err) => alert("Error creating account"));
+      .catch((err) => alert("Username or email already in use!"))
+      .finally(() => setLoading(false));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if(!validUsername || !validEmail || !validPassword || !passwordsMatch) return;
+    setLoading(true);
     sendRequest();
   };
 
@@ -176,10 +180,13 @@ export default function RegistrationForm() {
           </span>
         }
       </StyledFormFieldSection>
-      <StyledFormSubmitButton
-        type="submit"
-        value="Create Account"
-      />
+      <StyledFormSubmitButton type="submit">
+        {isLoading ?
+          <CgSpinner className="animate-spin w-6 h-6 rounded-full text-white m-auto" />
+          :
+          <span>Create Account</span>
+        }
+      </StyledFormSubmitButton>
     </StyledForm>
   );
 }

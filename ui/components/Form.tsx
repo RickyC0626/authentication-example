@@ -32,9 +32,9 @@ export const StyledFormButtonSection = tw.div<any>`
   flex gap-6 m-auto
 `;
 
-export const StyledFormSubmitButton = tw.input`
+export const StyledFormSubmitButton = tw.button<any>`
   px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-  hover:outline outline-2 outline-white
+  hover:outline outline-2 outline-white text-center
 `;
 
 export const StyledFormButton = tw.button`

@@ -60,10 +60,9 @@ export default function LoginForm() {
         </div>
       </StyledFormFieldSection>
       <StyledFormButtonSection>
-        <StyledFormSubmitButton
-          type="submit"
-          value="Login"
-        />
+        <StyledFormSubmitButton type="submit">
+          <span>Login</span>
+        </StyledFormSubmitButton>
         <Link href="/signup">
           <StyledFormButton>Sign Up</StyledFormButton>
         </Link>
