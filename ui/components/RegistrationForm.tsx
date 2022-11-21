@@ -38,22 +38,6 @@ export default function RegistrationForm() {
   const [validPassword, setValidPassword] = React.useState(true);
   const [passwordsMatch, setPasswordsMatch] = React.useState(true);
 
-  const sendRequest = () => {
-    axios.post("http://localhost:8000/signup", { username, email, password })
-      .then((res) => {
-        console.log(res);
-        router.push("/");
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if(!validUsername || !validEmail || !validPassword || !passwordsMatch) return;
-    sendRequest();
-  };
-
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uname = e.target.value;
 
@@ -73,6 +57,22 @@ export default function RegistrationForm() {
 
     setPassword(pass);
     setValidPassword(passwordRegex.test(pass));
+  };
+
+  const sendRequest = () => {
+    axios.post("http://localhost:8000/api/auth/signup", { username, email, password })
+      .then((res) => {
+        console.log(res);
+        router.push("/");
+      })
+      .catch((err) => alert("Error creating account"));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if(!validUsername || !validEmail || !validPassword || !passwordsMatch) return;
+    sendRequest();
   };
 
   return (

@@ -52,8 +52,8 @@ An example authentication system with registration and login forms
   - [X] Request body contains `username` and `password`
   - [X] Retrieves user from database by `username`
   - [X] Compares password hashes with stored hash
-  - [ ] Sends email verification with one-time code
-  - [ ] Sends limited use access token to use in browser as response
+  - [ ] Sends email verification with one-time code, set to expire in 10 minutes
+  - [ ] Sends limited use access token (1 hr) to use in browser as response
     - [ ] Timestamp for expiration date and time
     - [ ] If expired, user will have to login again
   - [X] Respond with status code `200 OK` on success
