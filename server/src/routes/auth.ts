@@ -1,4 +1,5 @@
 import express from "express";
+import * as jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { createUser, findUserByEmail, findUserByUsername, getAllUsers, validatePassword } from "../db";
 
@@ -30,7 +31,11 @@ router.post("/login", async (req, res) => {
 
   try {
     if(await validatePassword(password, user.hashedPassword)) {
-      res.sendStatus(200);
+      const token = jwt.sign({ username }, (process.env.JWT_SECRET as string), {
+        expiresIn: (process.env.JWT_EXPIRES_IN as string)
+      });
+
+      res.status(200).json({ username, token });
     }
     else res.sendStatus(403);
   }
