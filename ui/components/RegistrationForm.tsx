@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { CgSpinner } from "react-icons/cg";
 import { IoMdPerson } from "react-icons/io";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -10,8 +11,9 @@ import {
   StyledFormFieldSection,
   StyledFormFieldInput,
   StyledFormFieldLabel,
-  StyledFormSubmitButton,
-  StyledFormTitle
+  StyledFormTitle,
+  StyledFormFieldInputIcon,
+  StyledFormButton
 } from "./Form";
 import {
   username as usernameRegex,
@@ -37,22 +39,7 @@ export default function RegistrationForm() {
   const [validEmail, setValidEmail] = React.useState(true);
   const [validPassword, setValidPassword] = React.useState(true);
   const [passwordsMatch, setPasswordsMatch] = React.useState(true);
-
-  const sendRequest = () => {
-    axios.post("http://localhost:8000/signup", { username, email, password })
-      .then((res) => {
-        console.log(res);
-        router.push("/");
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if(!validUsername || !validEmail || !validPassword || !passwordsMatch) return;
-    sendRequest();
-  };
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uname = e.target.value;
@@ -75,6 +62,24 @@ export default function RegistrationForm() {
     setValidPassword(passwordRegex.test(pass));
   };
 
+  const sendRequest = () => {
+    axios.post("http://localhost:8000/api/auth/signup", { username, email, password })
+      .then((res) => {
+        console.log(res);
+        router.push("/");
+      })
+      .catch((err) => alert("Username or email already in use!"))
+      .finally(() => setLoading(false));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if(!validUsername || !validEmail || !validPassword || !passwordsMatch) return;
+    setLoading(true);
+    sendRequest();
+  };
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledFormTitle>Sign Up</StyledFormTitle>
@@ -82,7 +87,7 @@ export default function RegistrationForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_username_field">Username</StyledFormFieldLabel>
         <div className="flex">
-          <IoMdPerson className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={IoMdPerson} />
           <StyledFormFieldInput
             type="text"
             id="signup_username_field"
@@ -95,7 +100,7 @@ export default function RegistrationForm() {
           />
         </div>
         {!validUsername &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.invalidUsername}
           </span>
         }
@@ -103,7 +108,7 @@ export default function RegistrationForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_email_field">Email</StyledFormFieldLabel>
         <div className="flex">
-          <MdOutlineEmail className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={MdOutlineEmail} />
           <StyledFormFieldInput
             type="text"
             id="signup_email_field"
@@ -116,17 +121,17 @@ export default function RegistrationForm() {
           />
         </div>
         {!validEmail &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.invalidEmail}
           </span>
         }
       </StyledFormFieldSection>
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_password_field">
-          Password <span className="text-sm font-normal">(minimum 8 characters)</span>
+          Password <span className="text-sm font-normal sm:text-base">(minimum 8 characters)</span>
         </StyledFormFieldLabel>
         <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={RiLockPasswordLine} />
           <StyledFormFieldInput
             type="password"
             id="signup_password_field"
@@ -142,7 +147,7 @@ export default function RegistrationForm() {
           />
         </div>
         {!validPassword &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.invalidPassword}
           </span>
         }
@@ -150,7 +155,7 @@ export default function RegistrationForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormFieldLabel>
         <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={RiLockPasswordLine} />
           <StyledFormFieldInput
             type="password"
             id="signup_confirm_password_field"
@@ -171,15 +176,18 @@ export default function RegistrationForm() {
           />
         </div>
         {!passwordsMatch &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.passwordsNoMatch}
           </span>
         }
       </StyledFormFieldSection>
-      <StyledFormSubmitButton
-        type="submit"
-        value="Create Account"
-      />
+      <StyledFormButton type="submit">
+        {isLoading ?
+          <CgSpinner className="animate-spin w-6 h-6 rounded-full text-white m-auto sm:w-7 sm:h-7" />
+          :
+          <span>Create Account</span>
+        }
+      </StyledFormButton>
     </StyledForm>
   );
 }

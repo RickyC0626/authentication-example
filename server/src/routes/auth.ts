@@ -1,28 +1,35 @@
 import express from "express";
-import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+import { createUser, findUserByEmail, findUserByUsername, getAllUsers, validatePassword } from "../db";
 
 const router = express.Router();
 
-type User = {
-  username: string;
-  email: string;
-  password: string;
-}
+router.get("/users", async (req, res) => {
+  const users = await getAllUsers();
 
-const users: User[] = [];
-
-router.get("/users", (req, res) => {
   res.json(users);
 });
 
+/**
+ * GET /api/auth/login
+ *
+ * Request body: username, password
+ *
+ * Success:
+ * - 200 OK: login successful
+ *
+ * Failure:
+ * - 403 Forbidden: user credentials are wrong
+ * - 500 Internal Server Error: all other errors
+ */
 router.get("/login", async (req, res) => {
   const { username, password } = req.body;
-  const user = users.find(user => user.username === username);
+  const user = await findUserByUsername(username);
 
   if(!user) return res.sendStatus(403);
 
   try {
-    if(await bcrypt.compare(password, user.password)) {
+    if(await validatePassword(password, user.hashedPassword)) {
       res.sendStatus(200);
     }
     else res.sendStatus(403);
@@ -32,19 +39,72 @@ router.get("/login", async (req, res) => {
   }
 });
 
+/**
+ * POST /api/auth/signup
+ *
+ * Request body: username, email, password
+ *
+ * Success:
+ * - 201 Created: payload is newly created user
+ *
+ * Failure:
+ * - 400 Bad Request: username or email already exists
+ * - 500 Internal Server Error: all other errors
+ */
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user: User = { username, email, password: hashedPassword };
+    // If existing username, respond with error
+    if(await findUserByUsername(username)) return res.sendStatus(400);
 
-    users.push(user);
-    res.sendStatus(201);
+    // If existing email, respond with error
+    if(await findUserByEmail(email)) return res.sendStatus(400);
+
+    const user = await createUser({ username, email, password });
+    res.status(201).send({ user });
   }
   catch {
     res.sendStatus(500);
   }
 });
+
+async function sendVerificationEmail(email: string) {
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  const testAccount = await nodemailer.createTestAccount();
+
+  // Create reusable transporter object using the default SMTP transport
+  const transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass, // generated ethereal password
+    },
+  });
+
+  const otp = generateOTP();
+
+  // Send mail with defined transport object
+  const info = await transporter.sendMail({
+    from: "Authentication Server <auth@example.com>", // sender address
+    to: email, // list of receivers
+    subject: "One-Time Email Verification Code", // subject line
+    text: `Your one-time verification code, expires in 10 minutes:\n${otp}`, // plain text body
+    html: `
+      <p>Your one-time verification code, expires in 10 minutes:<p>
+      <b>${otp}</b>
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+}
+
+function generateOTP(): string {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
 
 export default router;

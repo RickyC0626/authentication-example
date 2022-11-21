@@ -10,8 +10,8 @@ import {
   StyledFormFieldSection,
   StyledFormFieldInput,
   StyledFormFieldLabel,
-  StyledFormSubmitButton,
-  StyledFormTitle
+  StyledFormTitle,
+  StyledFormFieldInputIcon
 } from "./Form";
 
 export default function LoginForm() {
@@ -29,7 +29,7 @@ export default function LoginForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="login_username_field">Username</StyledFormFieldLabel>
         <div className="flex">
-          <IoMdPerson className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={IoMdPerson} />
           <StyledFormFieldInput
             type="text"
             id="login_username_field"
@@ -45,7 +45,7 @@ export default function LoginForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel>Password</StyledFormFieldLabel>
         <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={RiLockPasswordLine} />
           <StyledFormFieldInput
             type="password"
             placeholder="********"
@@ -60,10 +60,9 @@ export default function LoginForm() {
         </div>
       </StyledFormFieldSection>
       <StyledFormButtonSection>
-        <StyledFormSubmitButton
-          type="submit"
-          value="Login"
-        />
+        <StyledFormButton type="submit">
+          <span>Login</span>
+        </StyledFormButton>
         <Link href="/signup">
           <StyledFormButton>Sign Up</StyledFormButton>
         </Link>
