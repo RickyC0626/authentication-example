@@ -4,7 +4,7 @@ import tw from "tailwind-styled-components";
 export const StyledForm = tw.form<any>`
   w-72 h-fit p-6 rounded-md
   bg-white/25 backdrop-blur-sm text-white
-  grid grid-cols-1 gap-3 sm:w-80
+  grid grid-cols-1 gap-3 sm:w-96 sm:p-7 sm:gap-4
 `;
 
 export const StyledFormTitle = tw.h2`
@@ -34,15 +34,10 @@ export const StyledFormFieldLabel = tw.label<any>`
 `;
 
 export const StyledFormButtonSection = tw.div<any>`
-  flex gap-6 m-auto
+  grid grid-cols-2 gap-3 m-auto w-full sm:gap-4
 `;
 
-export const StyledFormSubmitButton = tw.button<any>`
-  px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
+export const StyledFormButton = tw.button<any>`
+  w-full px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
   hover:outline outline-2 outline-white text-center sm:text-lg
-`;
-
-export const StyledFormButton = tw.button`
-  px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-  hover:outline outline-2 outline-white sm:text-lg
 `;

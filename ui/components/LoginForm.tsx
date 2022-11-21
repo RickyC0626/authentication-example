@@ -10,7 +10,6 @@ import {
   StyledFormFieldSection,
   StyledFormFieldInput,
   StyledFormFieldLabel,
-  StyledFormSubmitButton,
   StyledFormTitle,
   StyledFormFieldInputIcon
 } from "./Form";
@@ -61,9 +60,9 @@ export default function LoginForm() {
         </div>
       </StyledFormFieldSection>
       <StyledFormButtonSection>
-        <StyledFormSubmitButton type="submit">
+        <StyledFormButton type="submit">
           <span>Login</span>
-        </StyledFormSubmitButton>
+        </StyledFormButton>
         <Link href="/signup">
           <StyledFormButton>Sign Up</StyledFormButton>
         </Link>

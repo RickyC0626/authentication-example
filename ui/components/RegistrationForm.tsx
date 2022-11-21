@@ -11,9 +11,9 @@ import {
   StyledFormFieldSection,
   StyledFormFieldInput,
   StyledFormFieldLabel,
-  StyledFormSubmitButton,
   StyledFormTitle,
-  StyledFormFieldInputIcon
+  StyledFormFieldInputIcon,
+  StyledFormButton
 } from "./Form";
 import {
   username as usernameRegex,
@@ -181,13 +181,13 @@ export default function RegistrationForm() {
           </span>
         }
       </StyledFormFieldSection>
-      <StyledFormSubmitButton type="submit">
+      <StyledFormButton type="submit">
         {isLoading ?
-          <CgSpinner className="animate-spin w-6 h-6 rounded-full text-white m-auto" />
+          <CgSpinner className="animate-spin w-6 h-6 rounded-full text-white m-auto sm:w-7 sm:h-7" />
           :
           <span>Create Account</span>
         }
-      </StyledFormSubmitButton>
+      </StyledFormButton>
     </StyledForm>
   );
 }
