@@ -50,6 +50,10 @@ export async function findUserByUsername(username: string) {
   return await usersCollection.findOne<User>({ username });
 }
 
+export async function findUserByEmail(email: string) {
+  return await usersCollection.findOne<User>({ email });
+}
+
 export async function validatePassword(reqPassword: string, hashedPassword: string) {
   return await bcrypt.compare(reqPassword, hashedPassword);
 }

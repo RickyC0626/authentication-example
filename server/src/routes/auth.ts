@@ -1,6 +1,7 @@
 import express from "express";
 import nodemailer from "nodemailer";
-import { createUser, findUserByUsername, getAllUsers, validatePassword } from "../db";
+import { createUser, findUserByEmail, findUserByUsername, getAllUsers, validatePassword } from "../db";
+import { User } from "../entities/User";
 
 const router = express.Router();
 
@@ -31,6 +32,12 @@ router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    // If existing username, respond with error
+    if(await findUserByUsername(username)) return res.sendStatus(400);
+
+    // If existing email, respond with error
+    if(await findUserByEmail(email)) return res.sendStatus(400);
+
     await createUser({ username, email, password });
     res.sendStatus(201);
   }

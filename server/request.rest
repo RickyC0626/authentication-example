@@ -2,11 +2,36 @@ GET http://localhost:8000/api/auth/users
 
 ###
 
+// New Account (expect 201 Created)
 POST http://localhost:8000/api/auth/signup
 Content-Type: application/json
 
 {
   "username": "JohnDoe",
+  "email": "john.doe@email.com",
+  "password": "password"
+}
+
+###
+
+// Existing username (expect 400 Bad Request)
+POST http://localhost:8000/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "JohnDoe",
+  "email": "doe.john@email.com",
+  "password": "password"
+}
+
+###
+
+// Existing email (expect 400 Bad Request)
+POST http://localhost:8000/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "JohnDoe2022",
   "email": "john.doe@email.com",
   "password": "password"
 }
