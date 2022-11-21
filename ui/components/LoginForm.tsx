@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import React from "react";
 import { IoMdPerson } from "react-icons/io";
@@ -18,8 +19,17 @@ export default function LoginForm() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  const sendRequest = () => {
+    axios.post("http://localhost:8000/api/auth/login", { username, password })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => alert("Incorrect login credentials"));
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    sendRequest();
   };
 
   return (

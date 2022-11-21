@@ -10,6 +10,7 @@ let usersCollection: Collection<User>;
 export async function startDb() {
   try {
     const db = client.db("admin");
+    console.log("Connected to Mongo 'admin' database");
     usersCollection = db.collection<User>("users");
   }
   catch(err) {

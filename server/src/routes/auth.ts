@@ -11,7 +11,7 @@ router.get("/users", async (req, res) => {
 });
 
 /**
- * GET /api/auth/login
+ * POST /api/auth/login
  *
  * Request body: username, password
  *
@@ -22,7 +22,7 @@ router.get("/users", async (req, res) => {
  * - 403 Forbidden: user credentials are wrong
  * - 500 Internal Server Error: all other errors
  */
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await findUserByUsername(username);
 
