@@ -24,9 +24,10 @@ export default function LoginForm() {
   const sendRequest = () => {
     axios.post("http://localhost:8000/api/auth/login", { username, password })
       .then((res) => {
-        console.log(res);
+        const { token } = res.data;
+        localStorage.setItem("access_token", token);
       })
-      .catch((err) => alert("Incorrect login credentials"))
+      .catch(() => alert("Incorrect login credentials"))
       .finally(() => setLoading(false));
   }
 
