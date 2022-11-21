@@ -1,7 +1,6 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import { createUser, findUserByEmail, findUserByUsername, getAllUsers, validatePassword } from "../db";
-import { User } from "../entities/User";
 
 const router = express.Router();
 
@@ -28,6 +27,18 @@ router.get("/login", async (req, res) => {
   }
 });
 
+/**
+ * POST /api/auth/signup
+ *
+ * Request body: username, email, password
+ *
+ * Success:
+ * - 201 Created: payload is newly created user
+ *
+ * Failure:
+ * - 400 Bad Request: username or email already exists
+ * - 500 Internal Server Error: all other errors
+ */
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -38,8 +49,8 @@ router.post("/signup", async (req, res) => {
     // If existing email, respond with error
     if(await findUserByEmail(email)) return res.sendStatus(400);
 
-    await createUser({ username, email, password });
-    res.sendStatus(201);
+    const user = await createUser({ username, email, password });
+    res.status(201).send({ user });
   }
   catch {
     res.sendStatus(500);

@@ -44,6 +44,8 @@ export async function createUser({ username, email, password }: {
 
   // Insert user into database
   usersCollection.insertOne(user);
+
+  return user;
 }
 
 export async function findUserByUsername(username: string) {
