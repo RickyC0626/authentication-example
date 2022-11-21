@@ -12,7 +12,8 @@ import {
   StyledFormFieldInput,
   StyledFormFieldLabel,
   StyledFormSubmitButton,
-  StyledFormTitle
+  StyledFormTitle,
+  StyledFormFieldInputIcon
 } from "./Form";
 import {
   username as usernameRegex,
@@ -86,7 +87,7 @@ export default function RegistrationForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_username_field">Username</StyledFormFieldLabel>
         <div className="flex">
-          <IoMdPerson className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={IoMdPerson} />
           <StyledFormFieldInput
             type="text"
             id="signup_username_field"
@@ -99,7 +100,7 @@ export default function RegistrationForm() {
           />
         </div>
         {!validUsername &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.invalidUsername}
           </span>
         }
@@ -107,7 +108,7 @@ export default function RegistrationForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_email_field">Email</StyledFormFieldLabel>
         <div className="flex">
-          <MdOutlineEmail className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={MdOutlineEmail} />
           <StyledFormFieldInput
             type="text"
             id="signup_email_field"
@@ -120,17 +121,17 @@ export default function RegistrationForm() {
           />
         </div>
         {!validEmail &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.invalidEmail}
           </span>
         }
       </StyledFormFieldSection>
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_password_field">
-          Password <span className="text-sm font-normal">(minimum 8 characters)</span>
+          Password <span className="text-sm font-normal sm:text-base">(minimum 8 characters)</span>
         </StyledFormFieldLabel>
         <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={RiLockPasswordLine} />
           <StyledFormFieldInput
             type="password"
             id="signup_password_field"
@@ -146,7 +147,7 @@ export default function RegistrationForm() {
           />
         </div>
         {!validPassword &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.invalidPassword}
           </span>
         }
@@ -154,7 +155,7 @@ export default function RegistrationForm() {
       <StyledFormFieldSection>
         <StyledFormFieldLabel htmlFor="signup_confirm_password_field">Confirm Password</StyledFormFieldLabel>
         <div className="flex">
-          <RiLockPasswordLine className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80" />
+          <StyledFormFieldInputIcon Icon={RiLockPasswordLine} />
           <StyledFormFieldInput
             type="password"
             id="signup_confirm_password_field"
@@ -175,7 +176,7 @@ export default function RegistrationForm() {
           />
         </div>
         {!passwordsMatch &&
-          <span className="text-xs text-red-300 font-medium">
+          <span className="text-xs text-red-300 font-medium sm:text-sm">
             {error.passwordsNoMatch}
           </span>
         }

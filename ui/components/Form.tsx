@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import tw from "tailwind-styled-components";
 
 export const StyledForm = tw.form<any>`
@@ -20,12 +21,16 @@ export const StyledFormFieldSection = tw.div<any>`
 
 export const StyledFormFieldInput = tw.input<{ $isValid?: boolean }>`
   w-full h-10 p-2 pl-11 bg-transparent rounded-md border-2 border-white/50
-  focus-visible:outline-none placeholder:text-white/50
+  focus-visible:outline-none placeholder:text-white/50 sm:text-lg sm:h-11 sm:pl-12
   ${(p) => (p.$isValid ? "focus-visible:border-green-300" : "focus-visible:border-red-300")}
 `;
 
+export const StyledFormFieldInputIcon = ({ Icon }: { Icon: IconType }) => (
+  <Icon className="absolute place-self-center w-6 h-6 translate-x-3 text-white/80 sm:w-7 sm:h-7" />
+);
+
 export const StyledFormFieldLabel = tw.label<any>`
-  font-semibold
+  font-semibold sm:text-lg
 `;
 
 export const StyledFormButtonSection = tw.div<any>`
@@ -34,10 +39,10 @@ export const StyledFormButtonSection = tw.div<any>`
 
 export const StyledFormSubmitButton = tw.button<any>`
   px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-  hover:outline outline-2 outline-white text-center
+  hover:outline outline-2 outline-white text-center sm:text-lg
 `;
 
 export const StyledFormButton = tw.button`
   px-4 py-2 rounded-md bg-white/20 font-semibold cursor-pointer
-  hover:outline outline-2 outline-white
+  hover:outline outline-2 outline-white sm:text-lg
 `;
