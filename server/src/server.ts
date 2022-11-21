@@ -20,6 +20,6 @@ server.get("/health", (req: express.Request, res: express.Response) => {
   res.status(200).send("Healthy!");
 });
 
-server.use("/", authRouter);
+server.use("/api/auth", authRouter);
 
 export default server;

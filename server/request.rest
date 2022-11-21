@@ -1,8 +1,8 @@
-GET http://localhost:8000/users
+GET http://localhost:8000/api/auth/users
 
 ###
 
-POST http://localhost:8000/signup
+POST http://localhost:8000/api/auth/signup
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/login
+GET http://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {

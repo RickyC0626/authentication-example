@@ -4,15 +4,15 @@ import { createUser, findUserByUsername, getAllUsers, validatePassword } from ".
 
 const router = express.Router();
 
-router.get("/users", (req, res) => {
-  const users = getAllUsers();
+router.get("/users", async (req, res) => {
+  const users = await getAllUsers();
 
   res.json(users);
 });
 
 router.get("/login", async (req, res) => {
   const { username, password } = req.body;
-  const user = findUserByUsername(username);
+  const user = await findUserByUsername(username);
 
   if(!user) return res.sendStatus(403);
 
