@@ -30,14 +30,15 @@ router.post("/login", async (req, res) => {
   if(!user) return res.sendStatus(403);
 
   try {
-    if(await validatePassword(password, user.hashedPassword)) {
-      const token = jwt.sign({ username }, (process.env.JWT_SECRET as string), {
-        expiresIn: (process.env.JWT_EXPIRES_IN as string)
-      });
+    const isPasswordValidated = await validatePassword(password, user.hashedPassword);
 
-      res.status(200).json({ username, token });
-    }
-    else res.sendStatus(403);
+    if(!isPasswordValidated) return res.sendStatus(403);
+
+    const token = jwt.sign({ username }, (process.env.JWT_SECRET as string), {
+      expiresIn: (process.env.JWT_EXPIRES_IN as string)
+    });
+
+    res.status(200).json({ username, token });
   }
   catch {
     res.sendStatus(500);

@@ -3,7 +3,9 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import rootRouter from "./routes/root";
 import authRouter from "./routes/auth";
+import { verifyToken } from "./middlewares/verifyToken";
 
 const server = express();
 
@@ -22,5 +24,6 @@ server.get("/health", (req: express.Request, res: express.Response) => {
 });
 
 server.use("/api/auth", authRouter);
+server.use("/", verifyToken, rootRouter);
 
 export default server;
