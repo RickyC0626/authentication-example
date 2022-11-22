@@ -11,9 +11,8 @@ export default function Dashboard({ setLoggedIn }: {
   }
 
   return (
-    <main className="
-      min-w-full min-h-screen bg-gradient-to-t from-blue-700/80 via-indigo-800/90 to-violet-900/90
-      flex flex-col gap-4 justify-center place-items-center sm:gap-6
+    <div className="
+      flex flex-col gap-4 place-items-center sm:gap-6
     ">
       <h1 className="text-3xl text-white font-bold text-center sm:text-4xl">
         Welcome back, {sessionStorage.getItem("username")}
@@ -27,6 +26,6 @@ export default function Dashboard({ setLoggedIn }: {
       >
         Log Out
       </button>
-    </main>
+    </div>
   );
 }
