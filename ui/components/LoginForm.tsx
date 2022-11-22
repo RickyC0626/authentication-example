@@ -26,9 +26,11 @@ export default function LoginForm({ setLoggedIn }: {
   const sendRequest = () => {
     axios.post("http://localhost:8000/api/auth/login", { username, password })
       .then((res) => {
-        const { username, accessToken } = res.data;
+        const { username, accessToken, refreshToken } = res.data;
         sessionStorage.setItem("username", username);
+        // Not the best or safest way to store these
         sessionStorage.setItem("access_token", accessToken);
+        sessionStorage.setItem("refresh_token", refreshToken);
         setLoggedIn(true);
       })
       .catch(() => alert("Incorrect login credentials"))

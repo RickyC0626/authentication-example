@@ -42,12 +42,10 @@ router.post("/login", async (req, res) => {
       expiresIn: (process.env.REFRESH_TOKEN_EXPIRATION as string)
     });
 
-    // Assign refresh token to http-only cookie
     res.cookie("jwt", refreshToken, {
-      httpOnly: true, sameSite: "none", secure: true, maxAge: 24 * 60 * 60 * 1000
-    });
-
-    res.status(200).json({ username, accessToken });
+      httpOnly: true, sameSite: "none", secure: true, maxAge: 5 * 60 * 1000 // 5 minutes
+    })
+    .status(200).json({ username, accessToken, refreshToken });
   }
   catch {
     res.sendStatus(500);
@@ -61,9 +59,10 @@ router.post("/login", async (req, res) => {
  * - jwt: refresh token
  */
 router.get("/refresh", (req: express.Request, res: express.Response) => {
-  if(!req.cookies?.jwt) return res.sendStatus(406);
+  const auth = req.headers["authorization"];
+  const refreshToken = auth && auth.split(" ")[1];
 
-  const refreshToken = req.cookies.jwt;
+  if(!refreshToken) return res.sendStatus(406);
 
   // Verify refresh token
   jwt.verify(refreshToken, (process.env.REFRESH_SECRET as string), async (err: any, decoded: any) => {

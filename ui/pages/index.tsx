@@ -6,16 +6,37 @@ import LoginForm from "../components/LoginForm";
 export default function Home() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
 
-  React.useEffect(() => {
-    const token = sessionStorage.getItem("access_token");
+  const refreshAccessToken = () => {
+    const refreshToken = sessionStorage.getItem("refresh_token");
 
-    if(!token) return;
+    if(!refreshToken) return;
+
+    axios.get("http://localhost:8000/api/auth/refresh", {
+      headers: { "Authorization": `Bearer ${refreshToken}` }
+    })
+    .then((res) => {
+      const newToken = res.data?.accessToken;
+
+      sessionStorage.setItem("access_token", newToken);
+      setLoggedIn(true);
+    })
+    .catch(() => {});
+  };
+
+  const fetchAccessToken = () => {
+    const accessToken = sessionStorage.getItem("access_token");
+
+    if(!accessToken) return refreshAccessToken();
 
     axios.get("http://localhost:8000/", {
-      headers: { "Authorization": `Bearer ${token}` },
+      headers: { "Authorization": `Bearer ${accessToken}` }
     })
-      .then((res) => setLoggedIn(true))
-      .catch((err) => console.error(err));
+    .then(() => setLoggedIn(true))
+    .catch(() => refreshAccessToken());
+  };
+
+  React.useEffect(() => {
+    fetchAccessToken();
   }, []);
 
   return (

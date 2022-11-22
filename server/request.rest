@@ -86,3 +86,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikpva
 // Get new access token using refresh token
 GET http://localhost:8000/api/auth/refresh
 Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJpYXQiOjE2NjkwNzQ0ODYsImV4cCI6MTY2OTE2MDg4Nn0.mpbBbZpTBBucVBUnV7BudQ8pbs2VOx8S1iqOYPyJ8LU; Max-Age=86400; Path=/; Expires=Tue, 22 Nov 2022 23:48:06 GMT; HttpOnly; Secure; SameSite=None
+
+###
+
+// Try refresh token without cookie
+GET http://localhost:8000/api/auth/refresh
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJpYXQiOjE2NjkwNzQ0ODYsImV4cCI6MTY2OTE2MDg4Nn0.mpbBbZpTBBucVBUnV7BudQ8pbs2VOx8S1iqOYPyJ8LU
