@@ -35,11 +35,11 @@ router.post("/login", async (req, res) => {
     if(!isPasswordValidated) return res.sendStatus(403);
 
     const accessToken = jwt.sign({ username, email: user.email }, (process.env.JWT_SECRET as string), {
-      expiresIn: "30m"
+      expiresIn: (process.env.ACCESS_TOKEN_EXPIRATION as string)
     });
 
     const refreshToken = jwt.sign({ username }, (process.env.REFRESH_SECRET as string), {
-      expiresIn: "1d"
+      expiresIn: (process.env.REFRESH_TOKEN_EXPIRATION as string)
     });
 
     // Assign refresh token to http-only cookie
@@ -77,7 +77,7 @@ router.get("/refresh", (req: express.Request, res: express.Response) => {
 
     // Send new access token
     const accessToken = jwt.sign({ username, email: user.email }, (process.env.JWT_SECRET as string), {
-      expiresIn: "30m"
+      expiresIn: (process.env.ACCESS_TOKEN_EXPIRATION as string)
     });
 
     return res.json({ accessToken });
