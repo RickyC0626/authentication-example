@@ -1,5 +1,7 @@
+import axios from "axios";
 import Link from "next/link";
 import React from "react";
+import { CgSpinner } from "react-icons/cg";
 import { IoMdPerson } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import {
@@ -14,12 +16,31 @@ import {
   StyledFormFieldInputIcon
 } from "./Form";
 
-export default function LoginForm() {
+export default function LoginForm({ setLoggedIn }: {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isLoading, setLoading] = React.useState(false);
+
+  const sendRequest = () => {
+    axios.post("http://localhost:8000/api/auth/login", { username, password })
+      .then((res) => {
+        const { username, accessToken, refreshToken } = res.data;
+        sessionStorage.setItem("username", username);
+        // Not the best or safest way to store these
+        sessionStorage.setItem("access_token", accessToken);
+        sessionStorage.setItem("refresh_token", refreshToken);
+        setLoggedIn(true);
+      })
+      .catch(() => alert("Incorrect login credentials"))
+      .finally(() => setLoading(false));
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    sendRequest();
   };
 
   return (
@@ -61,7 +82,11 @@ export default function LoginForm() {
       </StyledFormFieldSection>
       <StyledFormButtonSection>
         <StyledFormButton type="submit">
-          <span>Login</span>
+          {isLoading ?
+            <CgSpinner className="animate-spin w-6 h-6 rounded-full text-white m-auto sm:w-7 sm:h-7" />
+            :
+            <span>Login</span>
+          }
         </StyledFormButton>
         <Link href="/signup">
           <StyledFormButton>Sign Up</StyledFormButton>

@@ -1,4 +1,5 @@
 import express from "express";
+import * as jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { createUser, findUserByEmail, findUserByUsername, getAllUsers, validatePassword } from "../db";
 
@@ -11,7 +12,7 @@ router.get("/users", async (req, res) => {
 });
 
 /**
- * GET /api/auth/login
+ * POST /api/auth/login
  *
  * Request body: username, password
  *
@@ -22,21 +23,64 @@ router.get("/users", async (req, res) => {
  * - 403 Forbidden: user credentials are wrong
  * - 500 Internal Server Error: all other errors
  */
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await findUserByUsername(username);
 
   if(!user) return res.sendStatus(403);
 
   try {
-    if(await validatePassword(password, user.hashedPassword)) {
-      res.sendStatus(200);
-    }
-    else res.sendStatus(403);
+    const isPasswordValidated = await validatePassword(password, user.hashedPassword);
+
+    if(!isPasswordValidated) return res.sendStatus(403);
+
+    const accessToken = jwt.sign({ username, email: user.email }, (process.env.JWT_SECRET as string), {
+      expiresIn: (process.env.ACCESS_TOKEN_EXPIRATION as string)
+    });
+
+    const refreshToken = jwt.sign({ username }, (process.env.REFRESH_SECRET as string), {
+      expiresIn: (process.env.REFRESH_TOKEN_EXPIRATION as string)
+    });
+
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true, sameSite: "none", secure: true, maxAge: 5 * 60 * 1000 // 5 minutes
+    })
+    .status(200).json({ username, accessToken, refreshToken });
   }
   catch {
     res.sendStatus(500);
   }
+});
+
+/**
+ * GET /api/auth/refresh
+ *
+ * Request cookies:
+ * - jwt: refresh token
+ */
+router.get("/refresh", (req: express.Request, res: express.Response) => {
+  const auth = req.headers["authorization"];
+  const refreshToken = auth && auth.split(" ")[1];
+
+  if(!refreshToken) return res.sendStatus(406);
+
+  // Verify refresh token
+  jwt.verify(refreshToken, (process.env.REFRESH_SECRET as string), async (err: any, decoded: any) => {
+    // Wrong refresh token
+    if(err) return res.sendStatus(406);
+
+    const { username } = decoded;
+    const user = await findUserByUsername(username);
+
+    if(!user) return res.sendStatus(403);
+
+    // Send new access token
+    const accessToken = jwt.sign({ username, email: user.email }, (process.env.JWT_SECRET as string), {
+      expiresIn: (process.env.ACCESS_TOKEN_EXPIRATION as string)
+    });
+
+    return res.json({ accessToken });
+  });
 });
 
 /**

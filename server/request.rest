@@ -1,3 +1,4 @@
+// Get all users
 GET http://localhost:8000/api/auth/users
 
 ###
@@ -38,10 +39,56 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/api/auth/login
+// Login with correct credentials
+POST http://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
   "username": "JohnDoe",
   "password": "password"
 }
+
+###
+
+// Login with incorrect username
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "JoeDon",
+  "password": "password"
+}
+
+###
+
+// Login with incorrect password
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "JohnDoe",
+  "password": "wordpass"
+}
+
+###
+
+// Access root endpoint without token
+GET http://localhost:8000/
+
+###
+
+// Access root endpoint with token
+GET http://localhost:8000/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG4uZG9lQGVtYWlsLmNvbSIsImlhdCI6MTY2OTA3NDQ4NiwiZXhwIjoxNjY5MDc4MDg2fQ.KtsEKSEVczP6F6-DoiO2mtMIyASUzHx1dcuzaEU-Afk
+
+###
+
+// Get new access token using refresh token
+GET http://localhost:8000/api/auth/refresh
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJpYXQiOjE2NjkwNzQ0ODYsImV4cCI6MTY2OTE2MDg4Nn0.mpbBbZpTBBucVBUnV7BudQ8pbs2VOx8S1iqOYPyJ8LU; Max-Age=86400; Path=/; Expires=Tue, 22 Nov 2022 23:48:06 GMT; HttpOnly; Secure; SameSite=None
+
+###
+
+// Try refresh token without cookie
+GET http://localhost:8000/api/auth/refresh
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJpYXQiOjE2NjkwNzQ0ODYsImV4cCI6MTY2OTE2MDg4Nn0.mpbBbZpTBBucVBUnV7BudQ8pbs2VOx8S1iqOYPyJ8LU
