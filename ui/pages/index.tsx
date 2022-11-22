@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div>
       {isLoggedIn ?
-        <Dashboard />
+        <Dashboard setLoggedIn={setLoggedIn} />
       :
         <main className="
           min-w-full min-h-screen bg-gradient-to-t from-blue-700/80 via-indigo-800/90 to-violet-900/90
