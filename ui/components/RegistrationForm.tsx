@@ -64,10 +64,7 @@ export default function RegistrationForm() {
 
   const sendRequest = () => {
     axios.post("http://localhost:8000/api/auth/signup", { username, email, password })
-      .then((res) => {
-        console.log(res);
-        router.push("/");
-      })
+      .then((res) => router.push("/"))
       .catch((err) => alert("Username or email already in use!"))
       .finally(() => setLoading(false));
   };

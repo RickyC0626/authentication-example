@@ -34,15 +34,54 @@ router.post("/login", async (req, res) => {
 
     if(!isPasswordValidated) return res.sendStatus(403);
 
-    const token = jwt.sign({ username }, (process.env.JWT_SECRET as string), {
-      expiresIn: (process.env.JWT_EXPIRES_IN as string)
+    const accessToken = jwt.sign({ username, email: user.email }, (process.env.JWT_SECRET as string), {
+      expiresIn: "30m"
     });
 
-    res.status(200).json({ username, token });
+    const refreshToken = jwt.sign({ username }, (process.env.REFRESH_SECRET as string), {
+      expiresIn: "1d"
+    });
+
+    // Assign refresh token to http-only cookie
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true, sameSite: "none", secure: true, maxAge: 24 * 60 * 60 * 1000
+    });
+
+    res.status(200).json({ username, accessToken });
   }
   catch {
     res.sendStatus(500);
   }
+});
+
+/**
+ * GET /api/auth/refresh
+ *
+ * Request cookies:
+ * - jwt: refresh token
+ */
+router.get("/refresh", (req: express.Request, res: express.Response) => {
+  if(!req.cookies?.jwt) return res.sendStatus(406);
+
+  const refreshToken = req.cookies.jwt;
+
+  // Verify refresh token
+  jwt.verify(refreshToken, (process.env.REFRESH_SECRET as string), async (err: any, decoded: any) => {
+    // Wrong refresh token
+    if(err) return res.sendStatus(406);
+
+    const { username } = decoded;
+    const user = await findUserByUsername(username);
+
+    if(!user) return res.sendStatus(403);
+
+    // Send new access token
+    const accessToken = jwt.sign({ username, email: user.email }, (process.env.JWT_SECRET as string), {
+      expiresIn: "30m"
+    });
+
+    return res.json({ accessToken });
+  });
 });
 
 /**

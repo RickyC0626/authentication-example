@@ -16,7 +16,9 @@ import {
   StyledFormFieldInputIcon
 } from "./Form";
 
-export default function LoginForm() {
+export default function LoginForm({ setLoggedIn }: {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setLoading] = React.useState(false);
@@ -24,8 +26,10 @@ export default function LoginForm() {
   const sendRequest = () => {
     axios.post("http://localhost:8000/api/auth/login", { username, password })
       .then((res) => {
-        const { token } = res.data;
-        localStorage.setItem("access_token", token);
+        const { username, accessToken } = res.data;
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("access_token", accessToken);
+        setLoggedIn(true);
       })
       .catch(() => alert("Incorrect login credentials"))
       .finally(() => setLoading(false));

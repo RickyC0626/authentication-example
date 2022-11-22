@@ -1,6 +1,7 @@
 import { startDb } from "./db";
 import server from "./server";
 
+// console.log(require("crypto").randomBytes(256).toString("base64"));
 const port = 8000;
 
 startDb().then(() => {

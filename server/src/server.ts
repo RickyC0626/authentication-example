@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import rootRouter from "./routes/root";
 import authRouter from "./routes/auth";
 import { verifyToken } from "./middlewares/verifyToken";
@@ -13,6 +14,7 @@ server.use(cors());
 server.use(helmet());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+server.use(cookieParser());
 server.use(
   morgan(":method :url :status :res[content-length] - :response-time ms", {
     skip: (req, res) => process.env.NODE_ENV === "test",
