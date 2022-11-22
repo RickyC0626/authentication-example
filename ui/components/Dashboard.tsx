@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 
 export default function Dashboard({ logOut }: {
@@ -5,7 +6,12 @@ export default function Dashboard({ logOut }: {
 }) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    logOut();
+
+    axios.get("http://localhost:8000/api/auth/logout", {
+      withCredentials: true
+    })
+      .then(() => logOut())
+      .catch(() => {});
   }
 
   return (

@@ -57,6 +57,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/logout", async (req, res) => {
+  res
+  .clearCookie("access_token")
+  .clearCookie("refresh_token")
+  .sendStatus(200);
+});
+
 /**
  * GET /api/auth/refresh
  *
