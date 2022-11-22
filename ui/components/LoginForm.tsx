@@ -31,10 +31,14 @@ export default function LoginForm({ setLoggedIn }: {
         // Not the best or safest way to store these
         sessionStorage.setItem("access_token", accessToken);
         sessionStorage.setItem("refresh_token", refreshToken);
-        setLoggedIn(true);
       })
       .catch(() => alert("Incorrect login credentials"))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setTimeout(() => {
+          setLoggedIn(true);
+          setLoading(false);
+        }, 750);
+      });
   }
 
   const handleSubmit = (e: React.FormEvent) => {
