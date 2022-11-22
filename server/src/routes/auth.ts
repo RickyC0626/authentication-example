@@ -42,10 +42,15 @@ router.post("/login", async (req, res) => {
       expiresIn: (process.env.REFRESH_TOKEN_EXPIRATION as string)
     });
 
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true, sameSite: "none", secure: true, maxAge: 5 * 60 * 1000 // 5 minutes
+    // secure: false in development, true in production
+    res
+    .cookie("access_token", accessToken, {
+      httpOnly: true, sameSite: "strict", secure: true, maxAge: 15 * 60 * 1000 // 15 minutes
     })
-    .status(200).json({ username, accessToken, refreshToken });
+    .cookie("refresh_token", refreshToken, {
+      httpOnly: true, sameSite: "strict", secure: true, maxAge: 60 * 60 * 1000 // 1 hour
+    })
+    .status(200).json({ username });
   }
   catch {
     res.sendStatus(500);
@@ -59,8 +64,7 @@ router.post("/login", async (req, res) => {
  * - jwt: refresh token
  */
 router.get("/refresh", (req: express.Request, res: express.Response) => {
-  const auth = req.headers["authorization"];
-  const refreshToken = auth && auth.split(" ")[1];
+  const refreshToken = req.cookies?.refresh_token;
 
   if(!refreshToken) return res.sendStatus(406);
 
@@ -79,7 +83,9 @@ router.get("/refresh", (req: express.Request, res: express.Response) => {
       expiresIn: (process.env.ACCESS_TOKEN_EXPIRATION as string)
     });
 
-    return res.status(200).json({ accessToken });
+    res.cookie("access_token", accessToken, {
+      httpOnly: true, sameSite: "strict", secure: true, maxAge: 15 * 60 * 1000 // 15 minutes
+    }).sendStatus(200);
   });
 });
 

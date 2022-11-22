@@ -11,40 +11,30 @@ export default function Home() {
   const logOut = () => {
     setLoading(true);
     setLoggedIn(false);
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("refresh_token");
     setTimeout(() => setLoading(false), 750);
   };
 
   const refreshAccessToken = () => {
-    const refreshToken = sessionStorage.getItem("refresh_token");
-
-    if(!refreshToken) return;
-
-    axios.get("http://localhost:8000/api/auth/refresh", {
-      headers: { "Authorization": `Bearer ${refreshToken}` }
+    fetch("http://localhost:8000/api/auth/refresh", {
+      method: "GET",
+      credentials: "include"
     })
     .then((res) => {
-      const newToken = res.data?.accessToken;
-
-      sessionStorage.setItem("access_token", newToken);
-      setLoggedIn(true);
-    })
-    .catch(() => {});
+      if(res.ok) setLoggedIn(true);
+    });
   };
 
   const fetchAccessToken = () => {
-    const accessToken = sessionStorage.getItem("access_token");
-
-    if(!accessToken) return refreshAccessToken();
-
     setLoading(true);
 
-    axios.get("http://localhost:8000/", {
-      headers: { "Authorization": `Bearer ${accessToken}` }
+    fetch("http://localhost:8000/", {
+      method: "GET",
+      credentials: "include"
     })
-    .then(() => setLoggedIn(true))
-    .catch(() => refreshAccessToken())
+    .then((res) => {
+      if(res.ok) setLoggedIn(true);
+      else refreshAccessToken();
+    })
     .finally(() => {
       setTimeout(() => setLoading(false), 750);
     });

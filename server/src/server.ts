@@ -11,11 +11,10 @@ import { verifyToken } from "./middlewares/verifyToken";
 const server = express();
 
 server.use(cors({
-  origin: [
-    "http://localhost:3000"
-  ],
+  origin: "http://localhost:3000",
   credentials: true,
-  exposedHeaders: ["Set-Cookie"]
+  exposedHeaders: ["Set-Cookie"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 server.set("trust proxy", 1);
 server.use(helmet());
