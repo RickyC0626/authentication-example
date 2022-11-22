@@ -30,10 +30,10 @@ An example authentication system with registration and login forms
 - [X] On successful signup, redirect to login page at `/`
 
 #### Home Page (Dashboard)
-- [ ] Base URL `/`
-- [ ] Redirect to here when login successful
+- [X] Base URL `/`
+- [X] Redirect to here when login successful
 - [ ] Main content is placeholder kanban columns (just backgrounds)
-- [ ] Top navbar with logout button
+- [ ] Logout button
 
 ### Server
 
@@ -41,24 +41,34 @@ An example authentication system with registration and login forms
 - [ ] `POST /signup` - Create new account
   - [X] Request body contains `username`, `email` and `password`
   - [X] Hashes password with salt
-  - [ ] Persists new user account in database
+  - [X] Persists new user account in database
     - [X] Field for verified email status
     - [ ] If email unverified, delete account after 15 minutes
     - [ ] If email verified, set verified email status to true, don't delete
   - [ ] Sends email verification with one-time code, set to expire in 10 minutes
   - [X] Respond with status code `201 Created` on success
   - [X] Respond with status code `500 Internal Server Error` on failure
-- [ ] `GET /login` - Login with credentials
+- [ ] `POST /login` - Login with credentials
   - [X] Request body contains `username` and `password`
   - [X] Retrieves user from database by `username`
   - [X] Compares password hashes with stored hash
   - [ ] Sends email verification with one-time code, set to expire in 10 minutes
-  - [ ] Sends limited use access token (1 hr) to use in browser as response
-    - [ ] Timestamp for expiration date and time
-    - [ ] If expired, user will have to login again
+  - [X] Sends limited use access token (1 hr) to use in browser as response
+    - [X] Has max age (time of expiration)
+    - [X] If expired, a new token will have to be generated using refresh token
   - [X] Respond with status code `200 OK` on success
   - [X] Respond with status code `403 Forbidden` on failure
   - [X] Respond with status code `500 Internal Server Error` on general failure
+- [X] `GET /refresh` - Generate new access token using refresh token
+  - [X] Header contains authorization bearer refresh token
+  - [X] If there's no token, return `406 Not Acceptable`
+  - [X] If token is wrong or expired, return `406 Not Acceptable`
+  - [X] If token is verified, return `200 OK` with new access token as payload
+- [X] `GET /` - Gain authorized access to homepage (verification middleware)
+  - [X] Header contains authorization bearer access token
+  - [X] If there's no token, return `401 Unauthorized`
+  - [X] If token is wrong or expired, return `403 Forbidden`
+  - [X] If token is verified, return `200 OK`
 - [ ] `GET /verify` - Verify new account
   - [ ] Request body contains `accountId` and `otp`
   - [ ] Checks if `otp` has expired (compare current time to expiry timestamp)
