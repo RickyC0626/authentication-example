@@ -79,7 +79,7 @@ router.get("/refresh", (req: express.Request, res: express.Response) => {
       expiresIn: (process.env.ACCESS_TOKEN_EXPIRATION as string)
     });
 
-    return res.json({ accessToken });
+    return res.status(200).json({ accessToken });
   });
 });
 
@@ -113,6 +113,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// TODO: verify email before allowing user authorization
 async function sendVerificationEmail(email: string) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
