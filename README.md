@@ -1,6 +1,17 @@
 # authentication-example
 An example authentication system with registration and login forms
 
+## Showcase
+
+### Login Page
+![Login Page](/assets/login-page.png)
+
+### Signup Page
+![Signup Page](/assets/signup-page.png)
+
+### Dashboard (Logged In)
+![Dashboard after logging in](/assets/dashboard.png)
+
 ## Roadmap
 
 ### UI
@@ -33,7 +44,7 @@ An example authentication system with registration and login forms
 - [X] Base URL `/`
 - [X] Redirect to here when login successful
 - [ ] Main content is placeholder kanban columns (just backgrounds)
-- [ ] Logout button
+- [X] Logout button
 
 ### Server
 
