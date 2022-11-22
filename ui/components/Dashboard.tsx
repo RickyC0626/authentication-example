@@ -1,13 +1,11 @@
 import React from "react";
 
-export default function Dashboard({ setLoggedIn }: {
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+export default function Dashboard({ logOut }: {
+  logOut: () => void
 }) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setLoggedIn(false);
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("refresh_token");
+    logOut();
   }
 
   return (

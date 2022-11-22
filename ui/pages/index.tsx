@@ -8,6 +8,14 @@ export default function Home() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
 
+  const logOut = () => {
+    setLoading(true);
+    setLoggedIn(false);
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("refresh_token");
+    setTimeout(() => setLoading(false), 750);
+  };
+
   const refreshAccessToken = () => {
     const refreshToken = sessionStorage.getItem("refresh_token");
 
@@ -38,7 +46,7 @@ export default function Home() {
     .then(() => setLoggedIn(true))
     .catch(() => refreshAccessToken())
     .finally(() => {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 750);
     });
   };
 
@@ -56,7 +64,7 @@ export default function Home() {
           <CgSpinner className="animate-spin w-20 h-20 rounded-full text-white m-auto sm:w-24 sm:h-24" />
         :
           isLoggedIn ?
-            <Dashboard setLoggedIn={setLoggedIn} />
+            <Dashboard logOut={logOut} />
           :
             <div className="grid gap-8">
               <h1 className="text-3xl text-white font-bold text-center sm:text-4xl">
